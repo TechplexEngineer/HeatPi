@@ -7,11 +7,12 @@ concurrency:
   cancel-in-progress: true
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
-    paths-ignore:   # do not run if these are the only files that have changed
-      - .github/**
+    #paths-ignore:   # do not run if these are the only files that have changed
+    #  - .github/**
 
 jobs:
   deploy:

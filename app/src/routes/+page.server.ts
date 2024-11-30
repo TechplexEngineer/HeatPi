@@ -1,3 +1,4 @@
+import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 // export type ZoneStatus = 'on' | 'off' | 'unknown';
@@ -12,8 +13,9 @@ enum ZoneControl {
     off = 'off',
     thermostat = 'thermostat',
 }
+export type Zone = { name: string, status: ZoneStatus, id: number, settingActiveUntil?: Date | undefined, control?: ZoneControl }
 
-let zones = [
+let zones: Zone[] = [
     {
         name: "Master Bed Room",
         status: ZoneStatus.on,
@@ -49,8 +51,6 @@ let zones = [
 ];
 
 export const load = (async () => {
-    console.log('loading zones');
-
     return {
         zones: zones,
     };
@@ -59,9 +59,16 @@ export const load = (async () => {
 export const actions: Actions = {
     set: async ({ request }) => {
         const data = await request.formData();
+        const control = data.get('control');
+        const zoneNum = parseInt(data.get('zone')?.toString()!);
+        const durationhrs = parseInt(data.get('durationhrs')?.toString()!);
 
-        console.log(data);
+        const zone = zones.find(z => z.id == zoneNum)
+        if (!zone) {
+            return fail(404, { message: 'Zone not found' });
+        }
 
-        return { zones };
+        zone.control = control as ZoneControl;
+        zone.settingActiveUntil = new Date(Date.now() + durationhrs * 60 * 60 * 1000);
     },
 };

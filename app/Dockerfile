@@ -1,35 +1,21 @@
-# FROM balenalib/raspberrypi4-64-ubuntu:latest AS build
-FROM balenalib/raspberry-pi-debian:bookworm AS build
-
+FROM balenalib/raspberrypi4-64-ubuntu:latest
 WORKDIR /app
 
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh && \
+RUN curl -fsSL https://deb.nodesource.com/setup_23.x -o nodesource_setup.sh && \
     bash nodesource_setup.sh && \
     apt-get install -y nodejs
 
 COPY package*.json ./
+RUN npm config list
+RUN npm install --include=dev
 
-RUN npm install
+RUN ls -l /app/node_modules | wc -l
+# RUN cat /app/node_modules/.bin/vite
 
 COPY . .
 RUN npm run build
-# RUN npm prune --production
-
-# -------------------------
-# FROM balenalib/raspberrypi4-64-ubuntu:latest AS run
-FROM balenalib/raspberry-pi-debian:bookworm AS run
-
-WORKDIR /app
-
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh && \
-    bash nodesource_setup.sh && \
-    apt-get install -y nodejs
 
 ENV NODE_ENV=production
 
-COPY --from=build /app/build ./build
-COPY --from=build /app/package.json ./package.json
-COPY --from=build /app/node_modules ./node_modules
-
-RUN ulimit -c unlimited
+# RUN ulimit -c unlimited
 ENTRYPOINT ["node", "build"]

@@ -1,16 +1,13 @@
-FROM balenalib/raspberrypi4-64-ubuntu:latest
+FROM balenalib/raspberry-pi-debian:latest
 WORKDIR /app
 
-RUN curl -fsSL https://deb.nodesource.com/setup_23.x -o nodesource_setup.sh && \
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh && \
     bash nodesource_setup.sh && \
     apt-get install -y nodejs
 
 COPY package*.json ./
 RUN npm config list
 RUN npm install --include=dev
-
-RUN ls -l /app/node_modules | wc -l
-# RUN cat /app/node_modules/.bin/vite
 
 COPY . .
 RUN npm run build

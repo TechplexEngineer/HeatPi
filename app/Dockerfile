@@ -1,20 +1,32 @@
-FROM node:20 AS build
+# FROM balenalib/raspberrypi4-64-ubuntu:latest AS build
+FROM balenalib/raspberry-pi-debian:bookworm AS build
 
 WORKDIR /app
 
-COPY package*.json .
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh && \
+    bash nodesource_setup.sh && \
+    apt-get install -y nodejs
 
-RUN npm ci
+COPY package*.json ./
+
+RUN npm install
 
 COPY . .
 RUN npm run build
-RUN npm prune --production
+# RUN npm prune --production
 
-FROM node:20 AS run
+# -------------------------
+# FROM balenalib/raspberrypi4-64-ubuntu:latest AS run
+FROM balenalib/raspberry-pi-debian:bookworm AS run
+
+WORKDIR /app
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh && \
+    bash nodesource_setup.sh && \
+    apt-get install -y nodejs
 
 ENV NODE_ENV=production
 
-WORKDIR /app
 COPY --from=build /app/build ./build
 COPY --from=build /app/package.json ./package.json
 COPY --from=build /app/node_modules ./node_modules

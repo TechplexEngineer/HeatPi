@@ -3,8 +3,6 @@
 	import type { ChangeEventHandler } from 'svelte/elements';
 	import type { Zone } from '../../routes/proxy+page.server';
 
-	// export let zone: any;
-	// export let durationHrs: number;
 	let { zone, durationHrs }: { zone: Zone; durationHrs: number } = $props();
 
 	let form = $state<HTMLFormElement>();

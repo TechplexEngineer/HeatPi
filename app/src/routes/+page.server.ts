@@ -69,6 +69,10 @@ export const actions: Actions = {
         }
 
         zone.control = control as ZoneControl;
-        zone.settingActiveUntil = new Date(Date.now() + durationhrs * 60 * 60 * 1000);
+        if (control == ZoneControl.thermostat) {
+            zone.settingActiveUntil = undefined;
+        } else {
+            zone.settingActiveUntil = new Date(Date.now() + durationhrs * 60 * 60 * 1000);
+        }
     },
 };

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import type { ChangeEventHandler } from 'svelte/elements';
 	import type { PageData } from './$types';
 	import ControlForm from '$lib/components/ControlForm.svelte';
 
@@ -35,7 +33,6 @@
 				<th>Zone</th>
 				<th>Status</th>
 				<th>Force/Control</th>
-				<!-- <th> Duration </th> -->
 				<th>Setting active until</th>
 			</tr>
 		</thead>
@@ -56,7 +53,18 @@
 					<td>
 						<ControlForm {zone} {durationHrs} />
 					</td>
-					<td>{zone.settingActiveUntil || '--'}</td>
+					<td
+						>{zone.settingActiveUntil
+							? new Date(zone.settingActiveUntil).toLocaleString('en-US', {
+									hour: 'numeric',
+									minute: 'numeric',
+									hour12: true,
+									month: '2-digit',
+									day: '2-digit',
+									year: '2-digit'
+								})
+							: '--'}</td
+					>
 				</tr>{/each}
 		</tbody>
 	</table>

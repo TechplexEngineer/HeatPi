@@ -8,7 +8,20 @@
 </script>
 
 <div class="container">
-	<h1>Home Heating Control</h1>
+	<div class="d-flex justify-content-between">
+		<h1>Home Heating Control</h1>
+		<div>
+			<button type="button" class="btn btn-outline-primary">
+				Top <span class="badge text-bg-secondary">{data.temps.top}</span>
+			</button>
+			<button type="button" class="btn btn-outline-primary">
+				Mid <span class="badge text-bg-secondary">{data.temps.mid}</span>
+			</button>
+			<button type="button" class="btn btn-outline-primary">
+				Bot <span class="badge text-bg-secondary">{data.temps.bot}</span>
+			</button>
+		</div>
+	</div>
 
 	<div class="form-group mb-3">
 		<label class="control-label" for="duration">Duration (Hour)</label>

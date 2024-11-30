@@ -1,7 +1,6 @@
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-// export type ZoneStatus = 'on' | 'off' | 'unknown';
 enum ZoneStatus {
     on = 'on',
     off = 'off',
@@ -50,9 +49,24 @@ let zones: Zone[] = [
     }
 ];
 
-export const load = (async () => {
+export const load = (async ({ locals }) => {
+
+    const status = await locals.relayBox.getAllZoneStatus()
+    for (const zone of zones) {
+        const zoneStatus = status[zone.id];
+        if (zoneStatus) {
+            zone.status = ZoneStatus.on;
+        } else {
+            zone.status = ZoneStatus.off;
+        }
+    }
     return {
         zones: zones,
+        temps: {
+            top: await locals.tempMgr.getTopTemp(),
+            mid: await locals.tempMgr.getMidTemp(),
+            bot: await locals.tempMgr.getBotTemp(),
+        }
     };
 }) satisfies PageServerLoad;
 

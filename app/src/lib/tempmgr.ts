@@ -5,7 +5,7 @@ export const topTankTempAddy = 0x4F;
 export const midTankTempAddy = 0x4E;
 export const botTankTempAddy = 0x4D;
 
-export class RelayBox {
+export class TempMgr {
 
     constructor(
         private connection: PromisifiedBus,

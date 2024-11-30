@@ -45,11 +45,11 @@
 			<button class="btn btn-outline-secondary" type="button" onclick={() => (durationHrs = 1)}
 				>1hr</button
 			>
-			<button class="btn btn-outline-secondary" type="button" onclick={() => (durationHrs = 0.25)}
-				>15min</button
-			>
 			<button class="btn btn-outline-secondary" type="button" onclick={() => (durationHrs = 0.5)}
 				>30min</button
+			>
+			<button class="btn btn-outline-secondary" type="button" onclick={() => (durationHrs = 0.25)}
+				>15min</button
 			>
 		</div>
 	</div>

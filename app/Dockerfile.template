@@ -1,9 +1,10 @@
-FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:latest as build
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:latest-build as build
 WORKDIR /app
 
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh && \
     bash nodesource_setup.sh && \
-    apt-get install -y nodejs
+    DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
 
@@ -15,6 +16,11 @@ RUN npm run build
 RUN npm prune --production
 
 FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:latest as run
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh && \
+    bash nodesource_setup.sh && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV NODE_ENV=production
 WORKDIR /app

@@ -42,4 +42,5 @@ jobs:
           balena login --token ${{secrets.BALENA_TOKEN}}
           
           balena push HeatPi
+          balena push DroidJS #testing
     

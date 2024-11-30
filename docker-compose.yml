@@ -13,3 +13,5 @@ services:
       - "80"
     environment:
       PORT: "80"
+    devices:
+      - "/dev/i2c-1:/dev/i2c-1"

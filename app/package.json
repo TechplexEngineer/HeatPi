@@ -30,6 +30,8 @@
 		"vitest": "^2.0.4"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-node": "^5.2.9"
+		"@sveltejs/adapter-node": "^5.2.9",
+		"@types/i2c-bus": "^5.1.2",
+		"i2c-bus": "^5.2.3"
 	}
 }

@@ -51,12 +51,14 @@ let zones: Zone[] = [
 ];
 
 export class ZoneMgr {
-    constructor(private relayBox: RelayBox, updateFreq: number = 1000 * 60 * 5) {
-
+    constructor(private relayBox: RelayBox, updateFreq: number = 1000 * 60 * .25) {
+        console.log('ZoneMgr starting up');
         // if settings have expired, set control to thermostat
         setInterval(async () => {
+            console.log('Checking for expired settings');
             for (const zone of zones) {
-                if (zone.settingActiveUntil && zone.settingActiveUntil > new Date()) {
+                if (zone.settingActiveUntil && Date.now() > zone.settingActiveUntil.getTime()) {
+                    console.log(`Clearing setting on zone ${zone.id}`);
                     zone.control = ZoneControl.thermostat;
                     zone.settingActiveUntil = undefined;
                     await this.relayBox.setZone(zone.id, zone.control);
@@ -84,8 +86,13 @@ export class ZoneMgr {
             console.error(`Zone ${zoneNum} not found`);
             return;
         }
+        console.log(`Setting zone ${zoneNum} to ${control} for ${durationhrs} hours`);
         zone.control = control;
-        zone.settingActiveUntil = new Date(Date.now() + durationhrs * 60 * 60 * 1000);
+        if (control == ZoneControl.thermostat) {
+            zone.settingActiveUntil = undefined;
+        } else {
+            zone.settingActiveUntil = new Date(Date.now() + durationhrs * 60 * 60 * 1000);
+        }
 
         await this.relayBox.setZone(zoneNum, control);
     }

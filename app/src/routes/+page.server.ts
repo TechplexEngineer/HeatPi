@@ -19,7 +19,7 @@ export const actions: Actions = {
         const data = await request.formData();
         const control = data.get('control');
         const zoneNum = parseInt(data.get('zone')?.toString()!);
-        const durationhrs = parseInt(data.get('durationhrs')?.toString()!);
+        const durationhrs = parseFloat(data.get('durationhrs')?.toString()!);
 
         await locals.zoneMgr.setZone(zoneNum, control as ZoneControl, durationhrs);
     },

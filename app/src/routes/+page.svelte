@@ -4,10 +4,16 @@
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 
+	let lastRefreshed = $state(new Date());
+
 	onMount(() => {
+		console.log('Mounted');
+
 		const interval = setInterval(() => {
+			console.log('Refreshing data');
 			invalidateAll();
-		}, 1000 * 60);
+			lastRefreshed = new Date();
+		}, 1000 * 30);
 		return () => clearInterval(interval);
 	});
 
@@ -19,6 +25,19 @@
 <div class="container">
 	<div class="d-flex justify-content-between">
 		<h1>Home Heating Control</h1>
+		<small>
+			<button type="button" class="btn btn-outline-secondary">
+				Last refreshed: {new Date(lastRefreshed).toLocaleString('en-US', {
+					hour: 'numeric',
+					minute: 'numeric',
+					second: 'numeric',
+					hour12: true,
+					month: '2-digit',
+					day: '2-digit',
+					year: '2-digit'
+				})}
+			</button>
+		</small>
 		<div>
 			<button type="button" class="btn btn-outline-primary">
 				Top <span class="badge text-bg-secondary">{data.temps.top}</span>

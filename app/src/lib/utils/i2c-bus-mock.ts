@@ -1,3 +1,5 @@
+import { botTankTempAddy, midTankTempAddy, topTankTempAddy } from "$lib/tempmgr";
+
 type I2CDeviceId = { manufacturer: number; product: number; name: string };
 
 type BytesWritten = { bytesWritten: number; buffer: Buffer };
@@ -659,8 +661,22 @@ export async function openPromisified(busNumber: number, options?: OpenOptions):
         readByte(address: number, command: number): Promise<number> { return {} as any },
         readWord(address: number, command: number): Promise<number> { return {} as any },
         readI2cBlock(address: number, command: number, length: number, buffer: Buffer): Promise<BytesRead> { return {} as any },
-        receiveByte(address: number): Promise<number> { return {} as any },
-        sendByte(address: number, byte: number): Promise<void> { return {} as any },
+        receiveByte(address: number): Promise<number> {
+            if (address === topTankTempAddy) {
+                return 37.222 as any;
+            }
+            if (address === midTankTempAddy) {
+                return 37.222 as any;
+            }
+            if (address === botTankTempAddy) {
+                return 37.222 as any;
+            }
+            return {} as any
+        },
+        sendByte(address: number, byte: number): Promise<void> {
+            console.log(`sendByte: ${address} ${byte}`);
+            return {} as any
+        },
         writeByte(address: number, command: number, byte: number): Promise<void> { return {} as any },
         writeQuick(address: number, command: number, bit: number): Promise<void> { return {} as any },
         writeI2cBlock(address: number, command: number, length: number, buffer: Buffer): Promise<BytesWritten> { return {} as any },

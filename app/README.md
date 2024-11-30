@@ -36,3 +36,8 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+
+# to run on Pi 1
+https://unofficial-builds.nodejs.org/download/release/v20.18.1/
+Lies, vite won't install

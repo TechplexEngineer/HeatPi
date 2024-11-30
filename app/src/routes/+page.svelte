@@ -1,6 +1,15 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import ControlForm from '$lib/components/ControlForm.svelte';
+	import { invalidateAll } from '$app/navigation';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		const interval = setInterval(() => {
+			invalidateAll();
+		}, 1000 * 60);
+		return () => clearInterval(interval);
+	});
 
 	let { data }: { data: PageData } = $props();
 
@@ -27,6 +36,12 @@
 		<label class="control-label" for="duration">Duration (Hour)</label>
 		<div class="input-group">
 			<input name="duration" type="text" bind:value={durationHrs} class="form-control" />
+			<button class="btn btn-outline-secondary" type="button" onclick={() => (durationHrs = 4)}
+				>4hr</button
+			>
+			<button class="btn btn-outline-secondary" type="button" onclick={() => (durationHrs = 2)}
+				>2hr</button
+			>
 			<button class="btn btn-outline-secondary" type="button" onclick={() => (durationHrs = 1)}
 				>1hr</button
 			>

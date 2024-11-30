@@ -1,6 +1,7 @@
 import os from 'os';
 import { RelayBox } from './relaybox';
 import { TempMgr } from './tempmgr';
+import { ZoneMgr } from './zonemgr';
 const isRaspberryPi = os.arch() === 'arm64' && os.platform() === 'linux';
 
 export const startup = async (): Promise<App.Locals> => {
@@ -11,8 +12,10 @@ export const startup = async (): Promise<App.Locals> => {
     const i2cBusNum = 1;
     const con = await i2cBus.openPromisified(i2cBusNum);
 
+    const relayBox = new RelayBox(con)
+
     return {
-        relayBox: new RelayBox(con),
+        zoneMgr: new ZoneMgr(relayBox),
         tempMgr: new TempMgr(con),
     };
 }

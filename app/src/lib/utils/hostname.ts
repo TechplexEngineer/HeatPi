@@ -1,4 +1,4 @@
-import dbus from 'dbus-next';
+import dbus from 'dbus-final';
 
 export const setupHostname = async (hostname: string) => {
     setHostname(hostname);

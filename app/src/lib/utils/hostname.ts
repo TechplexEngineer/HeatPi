@@ -1,9 +1,13 @@
 import dbus from 'dbus-final';
 
 export const setupHostname = async (hostname: string) => {
+    try {
     setHostname(hostname);
 
     advertiseHostname(hostname);
+    } catch (e) {
+        console.log(`Caught Error setting up hostname: ${e}`);
+    }
 };
 
 export const setHostname = async (hostname: string) => {

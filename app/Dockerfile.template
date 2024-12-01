@@ -1,6 +1,6 @@
 FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:latest-build as build
 WORKDIR /app
-
+RUN echo force-unsafe-io > /etc/dpkg/dpkg.cfg.d/docker-apt-speedup
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh && \
     bash nodesource_setup.sh && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs && \
@@ -16,7 +16,7 @@ RUN npm run build
 RUN npm prune --production
 
 FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:latest as run
-
+RUN echo force-unsafe-io > /etc/dpkg/dpkg.cfg.d/docker-apt-speedup
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh && \
     bash nodesource_setup.sh && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs && \

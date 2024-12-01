@@ -15,3 +15,5 @@ services:
       PORT: "80"
     devices:
       - "/dev/i2c-1:/dev/i2c-1"
+    labels:
+      io.balena.features.supervisor-api: 1

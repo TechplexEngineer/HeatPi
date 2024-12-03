@@ -2,9 +2,9 @@ import dbus from 'dbus-final';
 
 export const setupHostname = async (hostname: string) => {
     try {
-    setHostname(hostname);
+        setHostname(hostname);
 
-    advertiseHostname(hostname);
+        advertiseHostname(hostname);
     } catch (e) {
         console.log(`Caught Error setting up hostname: ${e}`);
     }
@@ -36,10 +36,17 @@ export const setHostname = async (hostname: string) => {
 }
 
 export const advertiseHostname = async (hostname: string) => {
+    console.log('1')
     const bus = dbus.systemBus();
+    console.log('2')
     const obj = await bus.getProxyObject('org.freedesktop.Avahi', '/');
+    console.log('3')
     const server = obj.getInterface('org.freedesktop.Avahi.Server');
-
-    await server.SetHostName(hostname);
+    console.log('4')
+    try {
+        await server.SetHostName(hostname);
+    } catch (e) {
+        console.log(`Caught Error advertising hostname: ${e}`);
+    }
     console.log(`Hostname advertised via Avahi: ${hostname}`);
 }

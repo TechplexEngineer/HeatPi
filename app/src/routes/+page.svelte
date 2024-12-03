@@ -51,7 +51,7 @@
 		</div>
 	</div>
 
-	<div class="alert alert-primary" role="alert">
+	<div class="alert alert-danger" role="alert">
 		{#each data.errors as error}
 			<p>{error}</p>
 		{/each}

@@ -51,11 +51,13 @@
 		</div>
 	</div>
 
+	{#if data.errors && data.errors.length > 0}
 	<div class="alert alert-danger" role="alert">
 		{#each data.errors as error}
 			<p>{error}</p>
 		{/each}
 	</div>
+	{/if}
 
 	<div class="form-group mb-3">
 		<label class="control-label" for="duration">Duration (Hour)</label>

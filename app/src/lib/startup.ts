@@ -26,6 +26,7 @@ export const startup = async (): Promise<App.Locals> => {
     return {
         zoneMgr: new ZoneMgr(relayBox),
         tempMgr: new TempMgr(con),
+        rawBus: con
     };
 }
 

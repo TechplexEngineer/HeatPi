@@ -2,8 +2,8 @@
 	import { page } from '$app/stores';
 
 	const pages = [
-		{ title: 'Home', href: '/' }
-		// { title: 'About', href: '/about' },
+		{ title: 'Home', href: '/' },
+		{ title: 'Bus', href: '/bus' },
 		// { title: 'Audio', href: '/audio' },
 		// { title: 'Config', href: '/config' },
 		// { title: 'Controller', href: '/controller' },

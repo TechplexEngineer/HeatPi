@@ -1,16 +1,44 @@
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { ZoneControl } from '$lib/relaybox';
+import type { Zone } from '$lib/zonemgr';
 
 export const load = (async ({ locals }) => {
+    let zones: Zone[] = [];
+    let errors = [];
+    try {
+        zones = await locals.zoneMgr.getZones();
+    } catch (e) {
+        errors.push(`Error fetching zones: ${e}`);
+    }
+
+    let topTemp = -1;
+    try {
+        topTemp = await locals.tempMgr.getTopTemp();
+    } catch (e) {
+        errors.push(`Error fetching top temp: ${e}`);
+    }
+    let midTemp = -1;
+    try {
+        midTemp = await locals.tempMgr.getMidTemp();
+    } catch (e) {
+        errors.push(`Error fetching mid temp: ${e}`);
+    }
+    let botTemp = -1;
+    try {
+        botTemp = await locals.tempMgr.getBotTemp();
+    } catch (e) {
+        errors.push(`Error fetching bot temp: ${e}`);
+    }
 
     return {
-        zones: await locals.zoneMgr.getZones(),
+        zones: zones,
         temps: {
-            top: await locals.tempMgr.getTopTemp(),
-            mid: await locals.tempMgr.getMidTemp(),
-            bot: await locals.tempMgr.getBotTemp(),
-        }
+            top: topTemp,
+            mid: midTemp,
+            bot: botTemp,
+        },
+        errors: errors,
     };
 }) satisfies PageServerLoad;
 

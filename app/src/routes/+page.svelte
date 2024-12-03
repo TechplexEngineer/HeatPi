@@ -51,6 +51,12 @@
 		</div>
 	</div>
 
+	<div class="alert alert-primary" role="alert">
+		{#each data.errors as error}
+			<p>{error}</p>
+		{/each}
+	</div>
+
 	<div class="form-group mb-3">
 		<label class="control-label" for="duration">Duration (Hour)</label>
 		<div class="input-group">

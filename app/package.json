@@ -38,6 +38,7 @@
 		"@types/i2c-bus": "^5.1.2",
 		"bootstrap": "^5.3.3",
 		"dbus-final": "github:RevolutionPi/dbus-final",
-		"i2c-bus": "^5.2.3"
+		"i2c-bus": "^5.2.3",
+		"radash": "^12.1.0"
 	}
 }

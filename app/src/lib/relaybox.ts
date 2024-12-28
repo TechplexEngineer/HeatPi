@@ -1,5 +1,6 @@
 import type { PromisifiedBus } from 'i2c-bus';
 import { arduinoI2CAddy } from './i2caddresses';
+import { retry } from 'radash';
 
 export enum ZoneControl {
     on = 'on',
@@ -15,7 +16,11 @@ export class RelayBox {
         private numZones = 6) { }
 
     async getAllZoneStatus() {
-        const data = await this.connection.receiveByte(this.address);
+        const data = await retry({ times: 3, delay: 100 }, async () => {
+            console.log('Running getAllZoneStatus');
+            return this.connection.receiveByte(this.address);
+        });
+        // const data = await this.connection.receiveByte(this.address);
         const status: Record<number, boolean> = {};
         for (let zone = 0; zone < this.numZones; zone++) {
             status[zone] = Boolean(data & (1 << zone));

@@ -4,7 +4,7 @@
 	const pages = [
 		{ title: 'Home', href: '/' },
 		{ title: 'Bus', href: '/bus' },
-		// { title: 'Audio', href: '/audio' },
+		{ title: 'History', href: '/history' }
 		// { title: 'Config', href: '/config' },
 		// { title: 'Controller', href: '/controller' },
 		// { title: 'Script', href: '/script' }

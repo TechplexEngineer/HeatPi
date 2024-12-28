@@ -5,16 +5,39 @@ import { retry } from "radash";
 
 export class TempMgr {
 
+    private history: { date: Date, top: number, mid: number, bot: number }[] = [];
+
     constructor(
         private connection: PromisifiedBus,
         private topAddy = topTankTempAddy,
         private midAddy = midTankTempAddy,
-        private botAddy = botTankTempAddy) { }
+        private botAddy = botTankTempAddy,
+        private historyUpdateIntervalMs = 5 * 1000,
+        private historyLengthMs = 60 * 60 * 1000) {
+        setInterval(async () => {
+            if (this.history.length > Math.floor(this.historyLengthMs / this.historyUpdateIntervalMs)) {
+                this.history.shift();
+            }
+            this.history.push({
+                date: new Date(),
+                top: await this.getTopTemp(),
+                mid: await this.getMidTemp(),
+                bot: await this.getBotTemp()
+            })
+        }, this.historyUpdateIntervalMs);
+    }
+
+    getHistory() {
+        return this.history;
+    }
 
     async getTopTemp(): Promise<number> {
         let count = 0;
         const tempc = await retry({ times: 4, delay: 75 }, async () => {
-            console.log('Running setZone', count++);
+            if (count++ > 0) {
+                console.log('Running getTopTemp', count);
+            }
+
             return await this.connection.receiveByte(this.topAddy);
         });
         return c2f(tempc);
@@ -23,7 +46,10 @@ export class TempMgr {
     async getMidTemp(): Promise<number> {
         let count = 0;
         const tempc = await retry({ times: 4, delay: 75 }, async () => {
-            console.log('Running setZone', count++);
+            if (count++ > 0) {
+                console.log('Running getMidTemp', count);
+            }
+
             return await this.connection.receiveByte(this.midAddy);
         });
         return c2f(tempc);
@@ -32,7 +58,9 @@ export class TempMgr {
     async getBotTemp(): Promise<number> {
         let count = 0;
         const tempc = await retry({ times: 4, delay: 75 }, async () => {
-            console.log('Running setZone', count++);
+            if (count++ > 0) {
+                console.log('Running getBotTemp', count);
+            }
             return await this.connection.receiveByte(this.botAddy);
         });
         return c2f(tempc);

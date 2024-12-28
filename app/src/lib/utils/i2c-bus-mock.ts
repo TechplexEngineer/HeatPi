@@ -666,14 +666,17 @@ export async function openPromisified(busNumber: number, options?: OpenOptions):
         readByte(address: number, command: number): Promise<number> { return {} as any },
         readWord(address: number, command: number): Promise<number> { return {} as any },
         readI2cBlock(address: number, command: number, length: number, buffer: Buffer): Promise<BytesRead> { return {} as any },
-        receiveByte(address: number): Promise<number> {
+        async receiveByte(address: number): Promise<number> {
             if (address === topTankTempAddy) {
+                return Math.random() * 10 + 30;
                 return 37.222 as any;
             }
             if (address === midTankTempAddy) {
+                return Math.random() * 10 + 30;
                 return 37.222 as any;
             }
             if (address === botTankTempAddy) {
+                return Math.random() * 10 + 30;
                 return 37.222 as any;
             }
             return {} as any

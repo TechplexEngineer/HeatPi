@@ -108,14 +108,7 @@
 						{/if}
 					</td>
 					<td>
-						<ControlForm
-							{zone}
-							{durationHrs}
-							onchange={() => {
-								console.log('reload');
-								invalidateAll();
-							}}
-						/>
+						<ControlForm {zone} {durationHrs} onchange={() => invalidateAll()} />
 					</td>
 					<td
 						>{zone.settingActiveUntil

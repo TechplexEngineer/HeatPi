@@ -43,7 +43,7 @@ export class RelayBox {
 
         let count = 0;
         const data = await retry({ times: 4, delay: 75 }, async () => {
-            console.log('Running setZone', count++);
+            console.log('Running setZone1', count++);
             return await this.connection.sendByte(this.address, message);
         });
 

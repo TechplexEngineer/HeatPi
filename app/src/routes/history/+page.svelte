@@ -36,7 +36,7 @@
 	};
 
 	onMount(() => {
-		const handle = setInterval(refresh, 500);
+		const handle = setInterval(refresh, 1000);
 		return () => clearInterval(handle);
 	});
 </script>

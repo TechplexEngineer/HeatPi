@@ -12,8 +12,8 @@ export class TempMgr {
         private topAddy = topTankTempAddy,
         private midAddy = midTankTempAddy,
         private botAddy = botTankTempAddy,
-        private historyUpdateIntervalMs = 5 * 1000,
-        private historyLengthMs = 60 * 60 * 1000) {
+        private historyUpdateIntervalMs = 1 * 60 * 1000,
+        private historyLengthMs = 8 * 60 * 60 * 1000) {
         setInterval(async () => {
             if (this.history.length > Math.floor(this.historyLengthMs / this.historyUpdateIntervalMs)) {
                 this.history.shift();

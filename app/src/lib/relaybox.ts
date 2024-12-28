@@ -16,8 +16,9 @@ export class RelayBox {
         private numZones = 6) { }
 
     async getAllZoneStatus() {
-        const data = await retry({ times: 3, delay: 100 }, async () => {
-            console.log('Running getAllZoneStatus');
+        let count = 0;
+        const data = await retry({ times: 3, delay: 50 }, async () => {
+            console.log('Running getAllZoneStatus', count++);
             return this.connection.receiveByte(this.address);
         });
         // const data = await this.connection.receiveByte(this.address);

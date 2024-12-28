@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { ChangeEventHandler } from 'svelte/elements';
-	import type { Zone } from '../../routes/proxy+page.server';
+	import type { Zone } from '$lib/zonemgr';
 
-	let { zone, durationHrs }: { zone: Zone; durationHrs: number } = $props();
+	let { zone, durationHrs, onchange }: { zone: Zone; durationHrs: number; onchange: () => void } =
+		$props();
 
 	let form = $state<HTMLFormElement>();
 
 	const radioBtnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
 		// console.log('radioBtnChange', zone.id, event.currentTarget.value);
 		form?.requestSubmit();
+		onchange();
 	};
 </script>
 

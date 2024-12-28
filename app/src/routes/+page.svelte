@@ -6,14 +6,16 @@
 
 	let lastRefreshed = $state(new Date());
 
+	const refresh = () => {
+		console.log('Refreshing data');
+		invalidateAll();
+		lastRefreshed = new Date();
+	};
+
 	onMount(() => {
 		console.log('Mounted');
 
-		const interval = setInterval(() => {
-			console.log('Refreshing data');
-			invalidateAll();
-			lastRefreshed = new Date();
-		}, 1000 * 30);
+		const interval = setInterval(refresh, 1000 * 30);
 		return () => clearInterval(interval);
 	});
 
@@ -26,7 +28,7 @@
 	<div class="d-flex justify-content-between">
 		<h1>Home Heating Control</h1>
 		<small>
-			<button type="button" class="btn btn-outline-secondary">
+			<button type="button" class="btn btn-outline-secondary" onclick={() => refresh()}>
 				Last refreshed: {new Date(lastRefreshed).toLocaleString('en-US', {
 					hour: 'numeric',
 					minute: 'numeric',
@@ -52,11 +54,11 @@
 	</div>
 
 	{#if data.errors && data.errors.length > 0}
-	<div class="alert alert-danger" role="alert">
-		{#each data.errors as error}
-			<p>{error}</p>
-		{/each}
-	</div>
+		<div class="alert alert-danger" role="alert">
+			{#each data.errors as error}
+				<p>{error}</p>
+			{/each}
+		</div>
 	{/if}
 
 	<div class="form-group mb-3">
@@ -106,7 +108,14 @@
 						{/if}
 					</td>
 					<td>
-						<ControlForm {zone} {durationHrs} />
+						<ControlForm
+							{zone}
+							{durationHrs}
+							onchange={() => {
+								console.log('reload');
+								invalidateAll();
+							}}
+						/>
 					</td>
 					<td
 						>{zone.settingActiveUntil

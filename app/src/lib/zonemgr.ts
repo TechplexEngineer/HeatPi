@@ -54,17 +54,17 @@ export class ZoneMgr {
     constructor(private relayBox: RelayBox, updateFreq: number = 1000 * 60 * .25) {
         console.log('ZoneMgr starting up');
         // if settings have expired, set control to thermostat
-        setInterval(async () => {
-            // console.log('Checking for expired settings');
-            for (const zone of zones) {
-                if (zone.settingActiveUntil && Date.now() > zone.settingActiveUntil.getTime()) {
-                    console.log(`Clearing setting on zone ${zone.id}`);
-                    zone.control = ZoneControl.thermostat;
-                    zone.settingActiveUntil = undefined;
-                    await this.relayBox.setZone(zone.id, zone.control);
-                }
-            }
-        }, updateFreq);
+        // setInterval(async () => {
+        //     // console.log('Checking for expired settings');
+        //     for (const zone of zones) {
+        //         if (zone.settingActiveUntil && Date.now() > zone.settingActiveUntil.getTime()) {
+        //             console.log(`Clearing setting on zone ${zone.id}`);
+        //             zone.control = ZoneControl.thermostat;
+        //             zone.settingActiveUntil = undefined;
+        //             await this.relayBox.setZone(zone.id, zone.control);
+        //         }
+        //     }
+        // }, updateFreq);
     }
 
     async getZones() {

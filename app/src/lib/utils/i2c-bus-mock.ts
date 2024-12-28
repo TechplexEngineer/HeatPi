@@ -653,7 +653,11 @@ export async function openPromisified(busNumber: number, options?: OpenOptions):
     return {
         async close(): Promise<void> { },
         async i2cFuncs(): Promise<I2CFuncs> { return {} as any },
-        async scan(address?: number): Promise<number[]> { return {} as any },
+        async scan(address?: number): Promise<number[]> {
+            return [
+                4
+            ]
+        },
         // async scan(startAddr: number, endAddr: number): Promise<number[]> {return []},
         deviceId(address: number): Promise<I2CDeviceId> { return {} as any },
         i2cRead(address: number, length: number, buffer: Buffer): Promise<BytesRead> { return {} as any },

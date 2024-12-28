@@ -1,7 +1,5 @@
 import type { PromisifiedBus } from 'i2c-bus';
-
-export const arduinoI2CAddy = 0x04;
-export const boxTempAddy = 0x49;
+import { arduinoI2CAddy } from './i2caddresses';
 
 export enum ZoneControl {
     on = 'on',

@@ -1,9 +1,6 @@
 import { c2f } from "$lib";
 import type { PromisifiedBus } from "i2c-bus";
-
-export const topTankTempAddy = 0x4F; //79
-export const midTankTempAddy = 0x4E; //78
-export const botTankTempAddy = 0x4D; //77
+import { topTankTempAddy, midTankTempAddy, botTankTempAddy } from "./i2caddresses";
 
 export class TempMgr {
 

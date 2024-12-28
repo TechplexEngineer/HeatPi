@@ -17,9 +17,9 @@ export class RelayBox {
 
     async getAllZoneStatus() {
         let count = 0;
-        const data = await retry({ times: 3, delay: 50 }, async () => {
+        const data = await retry({ times: 4, delay: 75 }, async () => {
             console.log('Running getAllZoneStatus', count++);
-            return this.connection.receiveByte(this.address);
+            return await this.connection.receiveByte(this.address);
         });
         // const data = await this.connection.receiveByte(this.address);
         const status: Record<number, boolean> = {};
@@ -41,6 +41,11 @@ export class RelayBox {
 
         console.log(`Setting zone ${zoneNumber} to ${state}: ${message.toString(2).padStart(8, '0')}`);
 
-        await this.connection.sendByte(this.address, message);
+        let count = 0;
+        const data = await retry({ times: 4, delay: 75 }, async () => {
+            console.log('Running setZone', count++);
+            return await this.connection.sendByte(this.address, message);
+        });
+
     }
 }

@@ -26,12 +26,17 @@ export class RelayBox {
     }
 
     async setZone(zoneNumber: number, state: ZoneControl) {
-        let message = 1 << zoneNumber;
+        let message = 0;
         if (state === ZoneControl.off) {
             message |= 1 << 5;
         } else if (state === ZoneControl.on) {
             message |= 1 << 4;
         }
+
+        message |= zoneNumber;
+
+        console.log(`Setting zone ${zoneNumber} to ${state}: ${message.toString(2).padStart(8, '0')}`);
+
         await this.connection.sendByte(this.address, message);
     }
 }

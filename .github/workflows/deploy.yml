@@ -36,11 +36,9 @@ jobs:
           rm /tmp/balena.zip
           export PATH=$PATH:/opt/balena-cli
 
-          
           trap "balena logout" EXIT # be sure to log out when done
 
           balena login --token ${{secrets.BALENA_TOKEN}}
           
-          # balena push HeatPi -m
-          balena push DroidJS -m #testing
+          balena push HeatPi -m
     

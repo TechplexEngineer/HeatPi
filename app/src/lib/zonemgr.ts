@@ -55,7 +55,7 @@ export class ZoneMgr {
         console.log('ZoneMgr starting up');
         // if settings have expired, set control to thermostat
         setInterval(async () => {
-            console.log('Checking for expired settings');
+            // console.log('Checking for expired settings');
             for (const zone of zones) {
                 if (zone.settingActiveUntil && Date.now() > zone.settingActiveUntil.getTime()) {
                     console.log(`Clearing setting on zone ${zone.id}`);

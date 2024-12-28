@@ -1,4 +1,5 @@
-import { botTankTempAddy, midTankTempAddy, topTankTempAddy } from "$lib/tempmgr";
+import { botTankTempAddy, midTankTempAddy, topTankTempAddy } from "$lib/i2caddresses";
+
 
 type I2CDeviceId = { manufacturer: number; product: number; name: string };
 

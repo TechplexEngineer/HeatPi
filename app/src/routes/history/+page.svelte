@@ -27,6 +27,12 @@
 				data: data.history.map((d) => d.bot),
 				borderColor: 'blue',
 				fill: false
+			},
+			{
+				label: 'Box',
+				data: data.history.map((d) => d.box),
+				borderColor: 'grey',
+				fill: false
 			}
 		]
 	});

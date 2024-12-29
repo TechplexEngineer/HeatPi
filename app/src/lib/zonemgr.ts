@@ -62,6 +62,10 @@ export class ZoneMgr {
                     zone.control = ZoneControl.thermostat;
                     zone.settingActiveUntil = undefined;
                     await this.relayBox.setZone(zone.id, zone.control);
+                } else {
+                    // if we push code the list or settings is lost, but the arduino remembers the last setting.
+                    // We need to periodically make sure the arduino matches our settings
+                    await this.relayBox.setZone(zone.id, zone.control || ZoneControl.thermostat);
                 }
             }
         }, updateFreq);

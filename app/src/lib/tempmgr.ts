@@ -1,17 +1,18 @@
 import { c2f } from "$lib";
 import type { PromisifiedBus } from "i2c-bus";
-import { topTankTempAddy, midTankTempAddy, botTankTempAddy } from "./i2caddresses";
+import { topTankTempAddy, midTankTempAddy, botTankTempAddy, boxTempAddy } from "./i2caddresses";
 import { retry } from "radash";
 
 export class TempMgr {
 
-    private history: { date: Date, top: number, mid: number, bot: number }[] = [];
+    private history: { date: Date, top: number, mid: number, bot: number, box: number }[] = [];
 
     constructor(
         private connection: PromisifiedBus,
         private topAddy = topTankTempAddy,
         private midAddy = midTankTempAddy,
         private botAddy = botTankTempAddy,
+        private boxAddy = boxTempAddy,
         private historyUpdateIntervalMs = 1 * 60 * 1000,
         private historyLengthMs = 8 * 60 * 60 * 1000) {
         setInterval(async () => {
@@ -22,7 +23,8 @@ export class TempMgr {
                 date: new Date(),
                 top: await this.getTopTemp(),
                 mid: await this.getMidTemp(),
-                bot: await this.getBotTemp()
+                bot: await this.getBotTemp(),
+                box: await this.getBoxTemp()
             })
         }, this.historyUpdateIntervalMs);
     }
@@ -62,6 +64,17 @@ export class TempMgr {
                 console.log('Running getBotTemp', count);
             }
             return await this.connection.receiveByte(this.botAddy);
+        });
+        return c2f(tempc);
+    }
+
+    async getBoxTemp(): Promise<number> {
+        let count = 0;
+        const tempc = await retry({ times: 4, delay: 75 }, async () => {
+            if (count++ > 0) {
+                console.log('Running getBoxTemp', count);
+            }
+            return await this.connection.receiveByte(this.boxAddy);
         });
         return c2f(tempc);
     }

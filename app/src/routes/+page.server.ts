@@ -30,6 +30,12 @@ export const load = (async ({ locals }) => {
     } catch (e) {
         errors.push(`Error fetching bot temp: ${e}`);
     }
+    let boxTemp = -1;
+    try {
+        boxTemp = await locals.tempMgr.getBoxTemp();
+    } catch (e) {
+        errors.push(`Error fetching box temp: ${e}`);
+    }
 
     return {
         zones: zones,
@@ -37,6 +43,7 @@ export const load = (async ({ locals }) => {
             top: topTemp,
             mid: midTemp,
             bot: botTemp,
+            box: boxTemp
         },
         errors: errors,
     };

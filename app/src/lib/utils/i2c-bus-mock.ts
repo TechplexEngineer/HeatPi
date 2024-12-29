@@ -1,4 +1,4 @@
-import { botTankTempAddy, midTankTempAddy, topTankTempAddy } from "$lib/i2caddresses";
+import { botTankTempAddy, boxTempAddy, midTankTempAddy, topTankTempAddy } from "$lib/i2caddresses";
 
 
 type I2CDeviceId = { manufacturer: number; product: number; name: string };
@@ -676,6 +676,10 @@ export async function openPromisified(busNumber: number, options?: OpenOptions):
                 return 37.222 as any;
             }
             if (address === botTankTempAddy) {
+                return Math.random() * 10 + 30;
+                return 37.222 as any;
+            }
+            if (address === boxTempAddy) {
                 return Math.random() * 10 + 30;
                 return 37.222 as any;
             }

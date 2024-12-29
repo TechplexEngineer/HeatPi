@@ -50,6 +50,10 @@
 			<a type="button" class="btn btn-outline-primary" href="/history">
 				Bot <span class="badge text-bg-secondary">{data.temps.bot}</span>
 			</a>
+
+			<a type="button" class="btn btn-outline-secondary" href="/history">
+				Box <span class="badge text-bg-secondary">{data.temps.box}</span>
+			</a>
 		</div>
 	</div>
 

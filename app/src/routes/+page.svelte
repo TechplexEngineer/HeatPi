@@ -41,15 +41,15 @@
 			</button>
 		</small>
 		<div>
-			<button type="button" class="btn btn-outline-primary">
+			<a type="button" class="btn btn-outline-primary" href="/history">
 				Top <span class="badge text-bg-secondary">{data.temps.top}</span>
-			</button>
-			<button type="button" class="btn btn-outline-primary">
+			</a>
+			<!-- <button type="button" class="btn btn-outline-primary">
 				Mid <span class="badge text-bg-secondary">{data.temps.mid}</span>
-			</button>
-			<button type="button" class="btn btn-outline-primary">
+			</button> -->
+			<a type="button" class="btn btn-outline-primary" href="/history">
 				Bot <span class="badge text-bg-secondary">{data.temps.bot}</span>
-			</button>
+			</a>
 		</div>
 	</div>
 

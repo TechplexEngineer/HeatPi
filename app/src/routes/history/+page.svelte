@@ -35,8 +35,10 @@
 		invalidateAll();
 	};
 
+	const refreshIntervalMs = 1000;
+
 	onMount(() => {
-		const handle = setInterval(refresh, 1000);
+		const handle = setInterval(refresh, refreshIntervalMs);
 		return () => clearInterval(handle);
 	});
 </script>
@@ -45,9 +47,12 @@
 	<div class="d-flex justify-content-between">
 		<h1>History</h1>
 		<div>
-			<!-- <button class="btn btn-primary mt-2">Scan</button> -->
+			<button
+				class="btn btn-outline-primary mt-2"
+				title={`Refreshes every ${refreshIntervalMs / 1000} sec`}>Refresh</button
+			>
 		</div>
 	</div>
 
-	<LineChart data={a} />
+	<LineChart data={a} options={{}} />
 </div>

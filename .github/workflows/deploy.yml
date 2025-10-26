@@ -29,12 +29,14 @@ jobs:
       - name: Build and deploy app with Balena CLI
         run: |
           set -euo pipefail
-          
+
           url=$(.github/get_balena-cli_url.sh)
-          curl -L -o /tmp/balena.zip ${url}
-          unzip /tmp/balena.zip -d /opt
-          rm /tmp/balena.zip
-          export PATH=$PATH:/opt/balena-cli
+          echo "Using balena-cli from $url"
+
+          curl -L -o /tmp/balena.tar.gz ${url}
+          tar -xzf /tmp/balena.tar.gz -C /opt
+          rm /tmp/balena.tar.gz
+          export PATH=$PATH:/opt/balena/bin
 
           trap "balena logout" EXIT # be sure to log out when done
 

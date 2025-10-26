@@ -16,12 +16,12 @@
 				borderColor: 'red',
 				fill: false
 			},
-			{
-				label: 'Mid',
-				data: data.history.map((d) => d.mid),
-				borderColor: 'orange',
-				fill: false
-			},
+			// {
+			// 	label: 'Mid',
+			// 	data: data.history.map((d) => d.mid),
+			// 	borderColor: 'orange',
+			// 	fill: false
+			// },
 			{
 				label: 'Bot',
 				data: data.history.map((d) => d.bot),
@@ -41,7 +41,7 @@
 		invalidateAll();
 	};
 
-	const refreshIntervalMs = 1000;
+	const refreshIntervalMs = 1_000 * 60 * 5; // 5 mins
 
 	onMount(() => {
 		const handle = setInterval(refresh, refreshIntervalMs);
